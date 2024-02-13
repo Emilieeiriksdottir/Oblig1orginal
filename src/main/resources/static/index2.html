@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Bestilling av kinobiletter</h1>
+<table>
+  <tr><td>Velg film:
+    <select id="filmvalg">
+      <option>Velg film her</option>
+      <option>Hunger games</option>
+      <option>Dear John</option>
+      <option>Mission impossible</option>
+    </select>
+    <p id="feilFilm"></p>
+    </td></tr>
+        <br>
+
+  <tr><td>Antall <input type="number" id="antall" value=""/><p id="feilAntall"></p></td></tr>
+
+  <tr><td>Fornavn</td>
+    <td><input type="text" id="fornavn" value=""/><p id="feilFornavn"></p></td></tr>
+  <tr><td>Etternavn</td>
+  <td><input type="text" id="etternavn" value=""/><p id="feilEtternavn"></p></td></tr>
+  <tr><td>Telefonnr </td><td><input type="text" id="telefonnr" value=""/><p id="feilTelefonnr"></p></td></tr>
+  <tr><td>Epost </td>
+    <td><input type="text" id="epost" value=""/><p id="feilEpost"></p> </td></tr>
+</table>
+<button onclick="velg()">Kjøp bilett</button>
+<h2>Alle billetter</h2>
+<span id="resultat"></span><br/>
+<br>
+<button onclick="resetTickets()">Slett alle billetene</button>
+<script src="myScript2.js"></script>
+</body>
+</html>
