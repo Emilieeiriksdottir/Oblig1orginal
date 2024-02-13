@@ -1,7 +1,5 @@
 let kinobiletterArray = [];
 function velg() {
-    let ut = " ";
-
     let filmvalg = document.getElementById("filmvalg").value;
     let feilFilm = document.getElementById("feilFilm");
     feilFilm.innerHTML =" ";
