@@ -5,7 +5,6 @@ function velg() {
     feilFilm.innerHTML =" ";
     if (filmvalg=== "Velg film her") {
         feilFilm.innerHTML = "Må velge en film".fontcolor("red");
-        return;
     }
 
     let antall = document.getElementById("antall").value;
@@ -13,7 +12,6 @@ function velg() {
     feilantall.innerHTML =" ";
     if (antall <= 0) {
         feilantall.innerHTML = "Må skrive noe inn i antall".fontcolor("red");
-        return
     }
 
     let fornavn = document.getElementById("fornavn").value;
@@ -21,7 +19,6 @@ function velg() {
     feilFornavn.innerHTML = "";
     if (fornavn === ''){
         feilFornavn.innerHTML = "Må skrive noe inn i Fornavn".fontcolor("red");
-        return;
     }
 
     let etternavn = document.getElementById("etternavn").value;
@@ -29,7 +26,6 @@ function velg() {
     feilEtternavn.innerHTML = " ";
     if (etternavn === ""){
         feilEtternavn.innerHTML = "Må skrive noe inn i etternavn".fontcolor("red");
-        return;
     }
 
     let telefonnr = document.getElementById("telefonnr").value;
@@ -39,7 +35,6 @@ function velg() {
     utelandsk nummer å kjøpe bilett*/
     if (isNaN(telefonnr) || telefonnr === ""){
         feilTelefonnr.innerHTML = "Må skrive noe inn i telefonnr".fontcolor("red");
-        return;
     }
 
     let epost = document.getElementById("epost").value;
@@ -47,7 +42,6 @@ function velg() {
     feilEpost.innerHTML = "";
     if (epost === "" || !epost.includes("@")){
         feilEpost.innerHTML = "Må skrive noe inn i epost".fontcolor("red");
-        return;
     }
 
     const bilett = {
