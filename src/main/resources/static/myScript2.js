@@ -1,103 +1,133 @@
-//lager et tomt array
-let kinobiletterArray = [];
-
-//oppretter en funksjon kalt velg
-function velg() {
-    //setter filmvalg lik input verdien til index siden
-    let filmvalg = document.getElementById("filmvalg").value;
-    //setter feilfilm lik div´en feil film i index siden
-    let feilFilm = document.getElementById("feilFilm");
-    feilFilm.innerHTML =" ";
-    //Dersom filmvalget er start valget, eller tomt så vil feilfilm meldingen vises i rød skrift
-    if (filmvalg=== "Velg film her" || filmvalg === "") {
-        feilFilm.innerHTML = "Må velge en film".fontcolor("red");
-    }
-
-    //Gjør det samme som med filmvalg, bare med antall, og feilmelding vises dersom antall er 0 eller mindre
+//Oppretter et array for kinobilettene
+let kinoBillettArray =[];
+//Lager egene funksjoner som sjekker at input er riktig ikke bare når kjøp knappen trykkes
+//En funksjon som sjekker at antallet stemmer
+function sjekkAntall(){
+    //Setter antall lik antall i index siden sin value, samme med antallfeilmelding
     let antall = document.getElementById("antall").value;
     let feilantall = document.getElementById("feilAntall");
     feilantall.innerHTML =" ";
-    if (antall <= 0) {
+    //Dersom antall ikke er et tall får vi feilmelding opp
+    if (isNaN(antall)) {
         feilantall.innerHTML = "Må skrive noe inn i antall".fontcolor("red");
     }
+}
 
-    //Gjør det samme igjen med fornavn inputen, og viser feilmelding dersom input er tom
+/*Definerer en regex validering som skal hjelpe å forsikre riktig input av navn. Her har jeg brukt følgende nettsider for
+ hjelp med regex validering: https://www.quora.com/What-does-this-regex-match-a-z
+ og https://cerveceroscodigo.github.io/ServiciosDeVivienda/constant-values.html#lib.RegexTester.KUN_BOKSTAVER */
+
+const navnRegex = /^[A-Z][a-z]{1,30}$/;
+//Lager en funksjon som sjekker at fornavnet stemmer
+function sjekkFornavn(){
+    //Gjør det samme som på antall med fornavn inputen, og viser feilmelding dersom input ikke på riktig format
     let fornavn = document.getElementById("fornavn").value;
     let feilFornavn = document.getElementById("feilFornavn");
     feilFornavn.innerHTML = "";
-    if (fornavn === ''){
+    if (navnRegex.test(fornavn)===false){
         feilFornavn.innerHTML = "Må skrive noe inn i Fornavn".fontcolor("red");
     }
+}
 
-    // Det samme som fornavn
+//Gjør det samme med etternavn som fornavn
+function sjekkEtternavn(){
     let etternavn = document.getElementById("etternavn").value;
     let feilEtternavn = document.getElementById("feilEtternavn");
-    feilEtternavn.innerHTML = " ";
-    if (etternavn === ""){
+    feilEtternavn.innerHTML = "";
+    if (navnRegex.test(etternavn)===false){
         feilEtternavn.innerHTML = "Må skrive noe inn i etternavn".fontcolor("red");
     }
+}
 
-    //Det samme som de andre, bare hvis input ikke er et nummer så vises feilmelding
-    let telefonnr = document.getElementById("telefonnr").value;
-    let feilTelefonnr = document.getElementById("feilTelefonnr");
-    feilTelefonnr.innerHTML = " ";
-    /*Her kunne man lagt til telefonnr lengde begrensning, men dette vil ikke gjøre det mulig for mennesker med
-    utelandsk nummer å kjøpe bilett*/
-    if (isNaN(telefonnr) || telefonnr === ""){
-        feilTelefonnr.innerHTML = "Må skrive noe inn i telefonnr".fontcolor("red");
-    }
+//For telefonvalidering har jeg brukt kode fra https://stackoverflow.com/questions/37114166/regex-for-8-digit-phone-number-singapore-number-length
+ const telefonnrRegex =  /^[0-9]{8}$/;
+//Lager en funksjon her på samme måte som de andre og sjekker at telefonnummeret er på riktig format
+function sjekkTelefon(){
+      let telefonnr = document.getElementById("telefonnr").value;
+      let feilTelefonnr = document.getElementById("feilTelefonnr");
+      feilTelefonnr.innerHTML = " ";
+      if (telefonnrRegex.test(telefonnr)===false){
+          feilTelefonnr.innerHTML = "Må skrive noe inn i telefonnr".fontcolor("red");
+      }
+}
 
-    // det samme som resten bare at eposten må inneholde @ og . og ikke være tom for at det skal være gyldig
+//For hjelp med email regex validering har jeg brukt følgende nettside: https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/
+const epostRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//Lager en siste sjekk funksjon her med epost for å forsikre at epost er på riktig format
+function sjekkEpost() {
     let epost = document.getElementById("epost").value;
     let feilEpost = document.getElementById("feilEpost");
     feilEpost.innerHTML = "";
-    if (epost === "" || !epost.includes("@") || !epost.includes(".")){
+    if (epostRegex.test(epost)===false) {
         feilEpost.innerHTML = "Må skrive noe inn i epost".fontcolor("red");
     }
-
-    //Definerer bilett objekt
-    const bilett = {
-        filmvalg, antall, fornavn, etternavn, telefonnr, epost
-    };
-
-    //pusher bilett som inneholder alle inputverdiene inn i arrayet
-    kinobiletterArray.push(bilett);
-    //videre kjøres funksjonen vis bilett
-    visBiletter();
-
-    //Nullstiller alle input boksene så de blir blanke igjen
-    document.getElementById("filmvalg").value = "";
-    document.getElementById("antall").value = "";
-    document.getElementById("fornavn").value = "";
-    document.getElementById("etternavn").value = "";
-    document.getElementById("telefonnr").value = "";
-    document.getElementById("epost").value = "";
 }
 
-//lager funksjonen som viser biletter
-function visBiletter() {
-    //setter resultat lik resultat id i span i indexen
-    let resultat = document.getElementById("resultat");
-    //setter resultat til en uordnet liste
-    resultat.innerHTML = "<ul>";
-
-    //går igjennom alle elementene i arrayet og oppretter et listeelement for hver bilett
-    kinobiletterArray.forEach(function (bilett) {
-        //oppretter nytt liste element
-        let li = document.createElement("li");
-        //setter text innholdet til liste elementet med informasjonen om biletten
-        li.textContent = `${bilett.filmvalg}, ${bilett.antall}, ${bilett.fornavn} ${bilett.etternavn}, ${bilett.telefonnr}, ${bilett.epost}`;
-       //legger til det opprettede listeelementet til resultatlisten
-        resultat.appendChild(li);
-    });
-    //avslutter den uordnede listen
-    resultat.innerHTML += "</ul>";
+//Inspirasjon tatt fra powerpointen Intro. JavaScript - del 2 på Canvas
+function visBilett(){
+    //Definerer ut som en tom variabel
+    let ut = "";
+    //Setter i lik 0, mindre enn lengden til arrayet og skal øke med en hver gjennomgang. skriver ut arrayverdiene med index "i"
+    for (let i=0; i < kinoBillettArray.length; i++){
+        ut+="<table><tr>";
+        ut+=kinoBillettArray[i].filmvalg+", "+kinoBillettArray[i].antall+", "+kinoBillettArray[i].fornavn+", "+kinoBillettArray[i].etternavn+", "+kinoBillettArray[i].telefonnr+", "+kinoBillettArray[i].epost;
+        ut+="</tr>";
+    }
+    document.getElementById("resultat").innerHTML=ut;
 }
 
-//funksjon som nullstiller bilettene
+function kjopBilett(){
+   document.getElementById("feilFilm").innerHTML = "";
+   document.getElementById("feilAntall").innerHTML ="";
+   document.getElementById("feilFornavn").innerHTML = "";
+   document.getElementById("feilEtternavn").innerHTML = "";
+   document.getElementById("feilTelefonnr").innerHTML = "";
+   document.getElementById("feilEpost").innerHTML ="";
+   const filmvalg = document.getElementById("filmvalg").value;
+   const antall1 = document.getElementById("antall").value;
+   const antall = Number(antall1);
+   const fornavn = document.getElementById("fornavn").value;
+   const etternavn = document.getElementById("etternavn").value;
+   const telefonnr1 = document.getElementById("telefonnr").value;
+   const telefonnr = Number(telefonnr1);
+   const epost = document.getElementById("epost").value;
+
+   /* sjekker om inputene er tomme eller har riktig info og sikrer at dersom en validering ikke stemmer så blir
+   de ikke lagt inn i bilett eller lagt til i arrayet*/
+    if (filmvalg==="" || filmvalg === "Velg film her"){
+        document.getElementById("feilFilm").innerHTML= "Må velge en film".fontcolor("red");
+    } else if (isNaN(antall) || antall<=0){
+        document.getElementById("feilAntall").innerHTML = "Må skrive noe inn i antall".fontcolor("red");
+    } else if (navnRegex.test(fornavn)===false){
+        document.getElementById("feilFornavn").innerHTML = "Må skrive noe inn i Fornavn".fontcolor("red");
+    }  else if (navnRegex.test(etternavn)===false) {
+        document.getElementById("feilEtternavn").innerHTML = "Må skrive noe inn i Etternavn".fontcolor("red");
+    } else if (isNaN(telefonnr)) {
+        document.getElementById("feilTelefonnr").innerHTML = "Må skrive noe inn i telefonnr".fontcolor("red");
+    } else if (epostRegex.test(epost)===false){
+        document.getElementById("feilEpost").innerHTML = "Må skrive noe inn i epost".fontcolor("red");
+    } else {
+        const bilett = {
+            filmvalg, antall, fornavn, etternavn, telefonnr, epost
+        };
+
+        //Legger til bilett  arrayet
+        kinoBillettArray.push(bilett);
+        visBilett();
+
+        //Nullstiller alle input boksene så de blir blanke igjen
+        document.getElementById("filmvalg").value = "Velg film her";
+        document.getElementById("antall").value = "";
+        document.getElementById("fornavn").value = "";
+        document.getElementById("etternavn").value = "";
+        document.getElementById("telefonnr").value = "";
+        document.getElementById("epost").value = "";
+    }
+}
+
 function resetTickets() {
-    //setter array lengden lik 0, som tømmer arrayet
-    kinobiletterArray.length = 0;
+    //tømmer reultatet for biletter
+    document.getElementById("resultat").innerHTML=" ";
     //kaller på funksjonen visBiletter() for å oppdatere visningen av biletter etter tilbakestillingen
     visBiletter();
 }
