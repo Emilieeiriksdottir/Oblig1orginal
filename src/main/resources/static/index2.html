@@ -7,39 +7,33 @@
 <body>
 <h1>Bestilling av kinobiletter</h1>
 <table>
-  <tr><td>Velg film:
-      <!--Oppretter en option boks for filmvalgene som fins-->
-    <select id="filmvalg">
-      <option>Velg film her</option>
-      <option>Hunger games</option>
-      <option>Dear John</option>
-      <option>Mission impossible</option>
-    </select>
-      <!--oppretter en tom div, som vil inneholde feilmelding dersom input info ikke er riktig-->
-    <div id="feilFilm"></div>
-    <br></td></tr>
+    <tr><td>Velg film:
+        <label for="filmvalg"></label><select onchange="sjekkFilmnavn()" id="filmvalg">
+            <option>Velg film her</option>
+            <option>Hunger games</option>
+            <option>Dear John</option>
+            <option>Mission impossible</option>
+        </select>
+        <div id="feilFilm"></div>
+        <br></td></tr>
 
-    <!--Lager input for antall biletter, og en tom div som vil vise feilmelding dersom input ikke stemmer. 
-    Gjør det samme med resterende input felt-->
- <tr><td>Antall 
-     <input type="number" id="antall" value=""/><div id="feilAntall"></div><br></td></tr>
-  <tr><td>Fornavn
-    <input type="text" id="fornavn" value=""/><div id="feilFornavn"></div></td></tr>
-  <tr><td>Etternavn
-    <input type="text" id="etternavn" value=""/><div id="feilEtternavn"></div></td></tr>
-  <tr><td>Telefonnr
-    <input type="text" id="telefonnr" value=""/><div id="feilTelefonnr"></div></td></tr>
-  <tr><td>Epost
-    <input type="text" id="epost" value=""/><div id="feilEpost"></div> </td></tr>
+
+    <tr><td>Antall <input type="number" id="antall" onchange="sjekkAntall()" value=""/><div id="feilAntall"></div><br></td></tr>
+
+    <tr><td>Fornavn
+        <input type="text" id="fornavn" onchange="sjekkFornavn()" value=""/><div id="feilFornavn"></div></td></tr>
+    <tr><td>Etternavn
+        <input type="text" id="etternavn" onchange="sjekkEtternavn()" value=""/><div id="feilEtternavn"></div></td></tr>
+    <tr><td>Telefonnr
+        <input type="text" id="telefonnr" onchange="sjekkTelefon()" value=""/><div id="feilTelefonnr"></div></td></tr>
+    <tr><td>Epost
+        <input type="text" id="epost" onchange="sjekkEpost()" value=""/><div id="feilEpost"></div> </td></tr>
 </table>
-    <!--Lager et knapp som kjøper bilettene og viser de under-->
-<button onclick="velg()">Kjøp bilett</button>
+<button onclick="kjopBilett()">Kjøp bilett</button>
 <h2>Alle billetter</h2>
 <span id="resultat"></span><br>
 <br>
-    <!--Lager en knapp som nullstiller/sletter bilettene-->
 <button onclick="resetTickets()">Slett alle billetene</button>
-    <!--Kobler javascript dokumentet til dette html dokumentet-->
-<script src="myScript2.js"></script>
+<script src="myScript.js"></script>
 </body>
 </html>
