@@ -51,7 +51,8 @@ function sjekkTelefon(){
       }
 }
 
-//For hjelp med email regex validering har jeg brukt følgende nettside: https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/
+//For hjelp med email regex validering har jeg brukt følgende nettside: 
+//https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/
 const epostRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 //Lager en siste sjekk funksjon her med epost for å forsikre at epost er på riktig format
 function sjekkEpost() {
